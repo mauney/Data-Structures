@@ -11,7 +11,7 @@ class LRUCache:
     def __init__(self, limit=10):
         self.limit = limit
         self.queue = DoublyLinkedList()
-        self.dict= dict()
+        self.storage = dict()
 
     """
     Retrieves the value associated with the given key. Also
@@ -21,9 +21,9 @@ class LRUCache:
     key-value pair doesn't exist in the cache.
     """
     def get(self, key):
-        if key in self.dict:
-            self.queue.move_to_front(self.dict[key])
-            return self.dict[key].value[1]
+        if key in self.storage:
+            self.queue.move_to_front(self.storage[key])
+            return self.storage[key].value[1]
         else:
             return None
 
@@ -39,18 +39,18 @@ class LRUCache:
     the newly-specified value.
     """
     def set(self, key, value):
-        if key not in self.dict:
+        if key not in self.storage:
             if self.queue.length >= self.limit:
-                # remove queue tail from dict
-                del self.dict[self.queue.tail.value[0]]
+                # remove queue tail from storage
+                del self.storage[self.queue.tail.value[0]]
                 # remove tail from queue
                 self.queue.remove_from_tail()
             # insert item at head of queue
             self.queue.add_to_head((key, value))
-            # add item to dict
-            self.dict[key] = self.queue.head
+            # add item to storage
+            self.storage[key] = self.queue.head
         else:
             # update node value if key already exists
-            self.dict[key].value = (key, value)
+            self.storage[key].value = (key, value)
             # move item to head of queue
-            self.queue.move_to_front(self.dict[key])
+            self.queue.move_to_front(self.storage[key])

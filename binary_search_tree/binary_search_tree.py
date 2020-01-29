@@ -1,7 +1,7 @@
-import sys
-sys.path.append('../queue_and_stack')
-from dll_queue import Queue
-from dll_stack import Stack
+# import sys
+# sys.path.append('../queue_and_stack')
+# from dll_queue import Queue
+# from dll_stack import Stack
 
 
 class BinarySearchTree:
@@ -12,21 +12,56 @@ class BinarySearchTree:
 
     # Insert the given value into the tree
     def insert(self, value):
-        pass
+        inserted = False
+        while not inserted:
+            if value < self.value:
+                if self.left is None:
+                    self.left = BinarySearchTree(value)
+                    inserted = True
+                else:
+                    self = self.left
+            elif value > self.value:
+                if self.right is None:
+                    self.right = BinarySearchTree(value)
+                    inserted = True
+                else:
+                    self = self.right
+            else:
+                break
+
+        return inserted
 
     # Return True if the tree contains the value
     # False if it does not
     def contains(self, target):
-        pass
+        while True:
+            if target == self.value:
+                return True
+            elif target < self.value:
+                if self.left:
+                    self = self.left
+                else:
+                    return False
+            elif target > self.value:
+                if self.right:
+                    self = self.right
+                else:
+                    return False
 
     # Return the maximum value found in the tree
     def get_max(self):
-        pass
+        while self.right:
+            self = self.right
+        return self.value
 
     # Call the function `cb` on the value of each node
     # You may use a recursive or iterative approach
     def for_each(self, cb):
-        pass
+        cb(self.value)
+        if self.left:
+            self.left.for_each(cb)
+        if self.right:
+            self.right.for_each(cb)
 
     # DAY 2 Project -----------------------
 
