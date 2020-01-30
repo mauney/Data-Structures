@@ -22,8 +22,9 @@ class LRUCache:
     """
     def get(self, key):
         if key in self.storage:
-            self.queue.move_to_front(self.storage[key])
-            return self.storage[key].value[1]
+            node = self.storage[key]
+            self.queue.move_to_front(node)
+            return node.value[1]
         else:
             return None
 
@@ -39,18 +40,36 @@ class LRUCache:
     the newly-specified value.
     """
     def set(self, key, value):
-        if key not in self.storage:
-            if self.queue.length >= self.limit:
-                # remove queue tail from storage
-                del self.storage[self.queue.tail.value[0]]
-                # remove tail from queue
-                self.queue.remove_from_tail()
-            # insert item at head of queue
-            self.queue.add_to_head((key, value))
-            # add item to storage
-            self.storage[key] = self.queue.head
-        else:
-            # update node value if key already exists
-            self.storage[key].value = (key, value)
-            # move item to head of queue
-            self.queue.move_to_front(self.storage[key])
+        # move node to front if key found
+        if key in self.storage:
+            node = self.storage[key]
+            node.value = (key, value)
+            self.queue.move_to_front(node)
+            return
+        
+        # if full remove last node from queue AND storage
+        if self.queue.length >= self.limit:
+            del self.storage[self.queue.tail.value[0]]
+            self.queue.remove_from_tail()
+
+        # create a node if key not found and place in front
+        self.queue.add_to_head((key, value))
+        self.storage[key] = self.queue.head
+
+
+        # # first pass
+        # if key not in self.storage:
+        #     if self.queue.length >= self.limit:
+        #         # remove queue tail from storage
+        #         del self.storage[self.queue.tail.value[0]]
+        #         # remove tail from queue
+        #         self.queue.remove_from_tail()
+        #     # insert item at head of queue
+        #     self.queue.add_to_head((key, value))
+        #     # add item to storage
+        #     self.storage[key] = self.queue.head
+        # else:
+        #     # update node value if key already exists
+        #     self.storage[key].value = (key, value)
+        #     # move item to head of queue
+        #     self.queue.move_to_front(self.storage[key])
