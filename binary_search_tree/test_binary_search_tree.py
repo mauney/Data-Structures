@@ -78,29 +78,55 @@ class BinarySearchTreeTests(unittest.TestCase):
         output = sys.stdout.getvalue()
         self.assertEqual(output, "1\n2\n3\n4\n5\n6\n7\n8\n")
 
-        # sys.stdout = io.StringIO()
-        # self.bst.bft_print(self.bst)
-        # output = sys.stdout.getvalue()
-        # self.assertTrue(output == "1\n8\n5\n3\n7\n2\n4\n6\n" or
-        #                 output == "1\n8\n5\n7\n3\n6\n4\n2\n")
+        sys.stdout = io.StringIO()
+        self.bst.bft_print(self.bst)
+        output = sys.stdout.getvalue()
+        self.assertTrue(output == "1\n8\n5\n3\n7\n2\n4\n6\n" or
+                        output == "1\n8\n5\n7\n3\n6\n4\n2\n")
 
-        # sys.stdout = io.StringIO()
-        # self.bst.dft_print(self.bst)
-        # output = sys.stdout.getvalue()
-        # self.assertTrue(output == "1\n8\n5\n7\n6\n3\n4\n2\n" or
-        #                 output == "1\n8\n5\n3\n2\n4\n7\n6\n")
+        sys.stdout = io.StringIO()
+        self.bst.dft_print(self.bst)
+        output = sys.stdout.getvalue()
+        self.assertTrue(output == "1\n8\n5\n7\n6\n3\n4\n2\n" or
+                        output == "1\n8\n5\n3\n2\n4\n7\n6\n")
 
-        # sys.stdout = io.StringIO()
-        # self.bst.pre_order_dft(self.bst)
-        # output = sys.stdout.getvalue()
-        # self.assertEqual(output, "1\n8\n5\n3\n2\n4\n7\n6\n")
+        sys.stdout = io.StringIO()
+        self.bst.pre_order_dft(self.bst)
+        output = sys.stdout.getvalue()
+        self.assertEqual(output, "1\n8\n5\n3\n2\n4\n7\n6\n")
 
-        # sys.stdout = io.StringIO()
-        # self.bst.post_order_dft(self.bst)
-        # output = sys.stdout.getvalue()
-        # self.assertEqual(output, "2\n4\n3\n6\n7\n5\n8\n1\n")
+        sys.stdout = io.StringIO()
+        self.bst.post_order_dft(self.bst)
+        output = sys.stdout.getvalue()
+        self.assertEqual(output, "2\n4\n3\n6\n7\n5\n8\n1\n")
 
         sys.stdout = stdout_  # Restore stdout
+
+    # def test_delete(self):
+    #     # self.bst = BinarySearchTree(12)
+    #     self.bst = BinarySearchTree(50)
+    #     self.bst.insert(30)
+    #     self.bst.insert(70)
+    #     self.bst.insert(40)
+    #     self.bst.insert(20)
+    #     self.bst.insert(60)
+    #     self.bst.insert(80)
+    #     self.bst.insert(61)
+    #     self.assertEqual(self.bst.contains(20), False)
+    #     self.assertEqual(self.bst.contains(30), True)
+    #     self.assertEqual(self.bst.contains(40), True)
+    #     self.bst.delete(30)
+    #     self.assertEqual(self.bst.contains(30), False)
+    #     self.assertEqual(self.bst.contains(40), True)
+    #     self.bst.delete(50)
+    #     self.assertEqual(self.bst.contains(20), False)
+    #     self.assertEqual(self.bst.contains(30), False)
+    #     self.assertEqual(self.bst.contains(50), False)
+    #     self.assertEqual(self.bst.contains(40), True)
+    #     self.assertEqual(self.bst.contains(60), True)
+    #     self.assertEqual(self.bst.contains(70), True)
+    #     self.assertEqual(self.bst.contains(80), True)
+    #     self.assertEqual(self.bst.contains(61), True)
 
 if __name__ == '__main__':
     unittest.main()
